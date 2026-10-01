@@ -1,0 +1,7 @@
+node_modules
+dist
+dev-dist
+# Material do curso: fica só no seu computador, não vai para a internet.
+fontes
+referencia
+PROMPT.md
