@@ -57,6 +57,8 @@ export type Regiao = {
   unidades: string;
   tese: string;
   pronto: boolean;
+  /** Região de simulados: não segue o molde aula/laboratório/chefão das outras. */
+  simulado?: boolean;
   fases: Phase[];
   cards: Card[];
 };

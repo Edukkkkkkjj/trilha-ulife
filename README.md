@@ -8,13 +8,19 @@ Funciona no celular e no computador, e continua funcionando sem internet depois 
 
 | Região | Conteúdo | Situação |
 | --- | --- | --- |
-| M1 | Conjuntos e funções (U1) | pronta: 6 aulas, laboratório, resumo, questões reais, chefão |
-| M2 | Lógica e álgebra booleana (U2 + U3) | pronta: 8 aulas, 2 laboratórios, resumo, questões reais, chefão |
-| M3 | Contagem (U4) | pronta: 3 aulas, laboratório, resumo, questões reais, chefão Tech-Life |
-| M4 a M7 | Probabilidade, álgebra linear, grafos, Aegis-Grid | em obras |
+| M1 | Conjuntos e funções (U1) | pronta |
+| M2 | Lógica e álgebra booleana (U2 + U3) | pronta |
+| M3 | Contagem (U4) | pronta |
+| M4 | Probabilidade (U5) | pronta |
+| M5 | Álgebra linear (U6), com o caso Telecom | pronta |
+| M6 | Grafos (U7) | pronta |
+| M7 | Integração: indução, recorrência e Aegis-Grid (U8) | pronta |
+| Simulados | A1 dissertativa e A2 objetiva (duas versões) de Matemática | prontos |
 | C1 a C4 | Exploração Digital | em obras (só os cartões de revisão) |
 
-Ilustrações vivas prontas: Venn vivo, Máquina de funções, Painel de interruptores, Bancada de circuitos, Árvore de contagem. Todas ficam também em **Mais → Brincar**, em modo livre.
+Cada região pronta tem aulas que ensinam do zero, laboratório, resumo, questões reais da plataforma (com a fonte) e um chefão.
+
+Ilustrações vivas prontas (13): Venn vivo, Máquina de funções, Painel de interruptores, Bancada de circuitos, Árvore de contagem, Simulador de probabilidade, Plano de vetores, Transformação por matriz, Retas do sistema, Editor de grafos, Dominós da indução e Aegis-Grid. Todas ficam também em **Mais → Brincar**, em modo livre.
 
 ## Como abrir no computador
 

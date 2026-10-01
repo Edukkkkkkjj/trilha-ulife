@@ -48,7 +48,7 @@ describe('integridade do conteúdo', () => {
     const usados = new Set<string>(fixos.map((e) => e.topic));
     for (const g of Object.values(GERADORES)) for (const n of [0, 1, 2]) usados.add(g(rng(9), n).topic);
     for (const t of usados) expect(TOPICOS[t], t).toBeTruthy();
-    for (const r of REGIOES.filter((x) => x.pronto)) {
+    for (const r of REGIOES.filter((x) => x.pronto && !x.simulado)) {
       const tipos = new Set(r.fases.map((f) => f.tipo));
       for (const t of ['leitura', 'licao', 'lab', 'questoes', 'chefe']) expect(tipos.has(t as never), `${r.id} sem ${t}`).toBe(true);
       expect(r.cards.length).toBeGreaterThanOrEqual(10);
