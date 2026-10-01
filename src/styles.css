@@ -151,7 +151,7 @@ table.tv td.x { background: var(--bad-soft) !important; }
 .palco .pega, .palco .pega * { touch-action: none; cursor: grab; }
 .palco text { font-family: var(--fonte); fill: var(--ink); user-select: none; pointer-events: none; }
 .vivo { display: grid; gap: 6px; background: var(--paper-2); border-radius: 12px; padding: 10px 12px; font-size: .95rem; }
-.vivo .f { font-family: var(--mono); overflow-x: auto; white-space: nowrap; }
+.vivo .f { font-family: var(--mono); overflow-wrap: anywhere; }
 .num { font-variant-numeric: tabular-nums; font-weight: 750; }
 .cA { color: var(--va); } .cB { color: var(--vb); } .cC { color: var(--vc); }
 .prever { border: 1.5px dashed var(--accent); border-radius: 12px; padding: 12px; background: var(--accent-soft); }
