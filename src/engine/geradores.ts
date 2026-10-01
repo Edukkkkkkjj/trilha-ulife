@@ -6,6 +6,7 @@ import { diff, inter, union } from '../lib/sets';
 import { analisar, type Pair } from '../lib/functions';
 import { GERADORES_M4 } from './geradores-m4';
 import { GERADORES_M5 } from './geradores-m5';
+import { GERADORES_M6 } from './geradores-m6';
 import { anagramas, arranjo, comb, fat, frequencias } from '../lib/contagem';
 import { classify, envs, evalAst, parse, show, subexprs, sumOfProducts, vars } from '../lib/logic';
 
@@ -449,6 +450,7 @@ const qualTecnica: Gerador = (r) => {
 };
 
 export const GERADORES: Record<string, Gerador> = {
+  ...GERADORES_M6,
   ...GERADORES_M5,
   ...GERADORES_M4,
   'm3.princ': principios, 'm3.fat': fatorial, 'm3.anag': anagrama, 'm3.ac': arranjoOuComb, 'm3.qual': qualTecnica,

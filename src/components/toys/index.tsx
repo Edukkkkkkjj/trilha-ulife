@@ -9,6 +9,7 @@ import { SimuladorProb } from './Simulador';
 import { PlanoVetores } from './Linear';
 import { TransformaMatriz } from './Linear';
 import { RetasSistema } from './Linear';
+import { EditorGrafos } from './Grafos';
 
 export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string; C: (p: ToyProps) => React.JSX.Element }> = {
   venn: { nome: 'Venn vivo', resumo: 'Arraste elementos entre os círculos; conjuntos, contagens e inclusão-exclusão se recalculam.', regiao: 'M1', C: VennVivo },
@@ -19,6 +20,7 @@ export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string;
   vetores: { nome: 'Plano de vetores', resumo: 'Arraste as pontas de dois vetores: soma, múltiplo, produto escalar, norma e ângulo mudam ao vivo.', regiao: 'M5', C: PlanoVetores },
   matriz: { nome: 'Transformação por matriz', resumo: 'Uma matriz 2×2 deforma o plano. O determinante é o fator de área: quando zera, tudo achata.', regiao: 'M5', C: TransformaMatriz },
   retas: { nome: 'Retas do sistema', resumo: 'Duas equações, duas retas: cruzam (SPD), são paralelas (SI) ou coincidem (SPI). Inclui o caso Telecom.', regiao: 'M5', C: RetasSistema },
+  grafos: { nome: 'Editor de grafos', resumo: 'Desenhe vértices e arestas; veja graus, matrizes e listas ao vivo e rode BFS, DFS, Dijkstra, Bellman-Ford e Kruskal passo a passo.', regiao: 'M6', C: EditorGrafos },
   bancada: { nome: 'Bancada de circuitos',resumo: 'Arraste portas, ligue fios, veja o sinal passar. O jogo escreve a expressão do que você montou.', regiao: 'M2', C: Bancada },
 };
 
