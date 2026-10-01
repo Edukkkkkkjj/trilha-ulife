@@ -33,7 +33,7 @@ export type Ex =
   | (Base & { kind: 'classificar'; categorias: string[]; itens: { texto: string; cat: number; porque?: string }[] })
   | (Base & { kind: 'passos'; passos: Passo[]; ocultos: number });
 
-export type ToyId = 'venn' | 'interruptores' | 'bancada' | 'funcoes' | 'arvore' | 'simulador' | 'vetores' | 'matriz' | 'retas' | 'grafos' | 'dominos' | 'aegis' | 'cano' | 'pilha' | 'silos' | 'treinador' | 'spam' | 'gerador';
+export type ToyId = 'venn' | 'interruptores' | 'bancada' | 'funcoes' | 'arvore' | 'simulador' | 'vetores' | 'matriz' | 'retas' | 'grafos' | 'dominos' | 'aegis' | 'cano' | 'pilha' | 'silos' | 'treinador' | 'spam' | 'gerador' | 'feed' | 'escala' | 'vies' | 'lgpd';
 
 export type Step =
   | { t: 'texto'; md: string; selo?: Selo; seloNota?: string }

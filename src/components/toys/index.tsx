@@ -18,6 +18,10 @@ import { EmpresaSilos } from './Exp1';
 import { TreinadorModelo } from './Exp2';
 import { AutomacaoIA } from './Exp2';
 import { GeradorTexto } from './Exp2';
+import { FeedAlgoritmo } from './Exp3';
+import { EscalaNegocio } from './Exp3';
+import { LabVies } from './Exp3';
+import { ChecklistLgpd } from './Exp3';
 
 export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string; C: (p: ToyProps) => React.JSX.Element }> = {
   venn: { nome: 'Venn vivo', resumo: 'Arraste elementos entre os círculos; conjuntos, contagens e inclusão-exclusão se recalculam.', regiao: 'M1', C: VennVivo },
@@ -37,6 +41,10 @@ export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string;
   treinador: { nome: 'Treinador de modelo', resumo: 'Ajuste uma reta aos dados na mão e depois deixe a máquina treinar. Aprender é diminuir o erro; um dado ruim entorta tudo.', regiao: 'C3', C: TreinadorModelo },
   spam: { nome: 'Automação × IA', resumo: 'O mesmo filtro de spam feito com regra escrita e com exemplos rotulados. Ensine errado e veja o viés nascer.', regiao: 'C3', C: AutomacaoIA },
   gerador: { nome: 'Gerador de texto', resumo: 'Um modelo de linguagem minúsculo: ele só sabe que palavra costuma vir depois de qual. Escreva com ele e mude o prompt.', regiao: 'C3', C: GeradorTexto },
+  feed: { nome: 'O feed e o algoritmo', resumo: 'Os mesmos oito posts em três ordens. Mude o critério e veja o boato subir; curta e veja a bolha fechar.', regiao: 'C4', C: FeedAlgoritmo },
+  escala: { nome: 'Escala: loja × aplicativo', resumo: 'O custo por cliente de um negócio físico e de um digital conforme o público cresce. E o que um MVP economiza.', regiao: 'C4', C: EscalaNegocio },
+  vies: { nome: 'Laboratório de viés', resumo: 'Uma nota de corte, dois bairros. Mesma regra ou mesmo resultado: as duas ideias de justo não cabem juntas.', regiao: 'C4', C: LabVies },
+  lgpd: { nome: 'Cadastro e LGPD', resumo: 'Monte um cadastro e veja os seis princípios da LGPD acenderem ou apagarem.', regiao: 'C4', C: ChecklistLgpd },
   bancada: { nome: 'Bancada de circuitos',resumo: 'Arraste portas, ligue fios, veja o sinal passar. O jogo escreve a expressão do que você montou.', regiao: 'M2', C: Bancada },
 };
 

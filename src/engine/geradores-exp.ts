@@ -111,4 +111,48 @@ const partesPrompt = classifica('c3.prompt', 'c3.prompt', 'Um bom prompt tem con
   ['"Responda em uma tabela de duas colunas."', 2, 'Formato da resposta: instrução.'],
 ], ['Contexto: a situação. Objetivo: para quê. Instrução: o que fazer e como entregar.', 'Quem, onde e para quem: contexto. A finalidade: objetivo. O verbo de comando e o formato: instrução.'], 'Contexto (a situação e o público), objetivo (para que serve) e instrução clara (a tarefa e o formato da resposta).');
 
-export const GERADORES_EXP: Record<string, Gerador> = { 'c3.tipo': tipoAprendizado, 'c3.autoia': autoOuIa, 'c3.prompt': partesPrompt, 'c1.vazao': vazaoDownload, 'c1.modelo': modeloNuvem, 'c1.rede': redes, 'c1.triade': triade, 'c2.digtrans': digOuTransf, 'c2.erpcrm': erpOuCrm, 'c2.rogers': dominios };
+// ---------- C4 ----------
+const cotidiano = classifica('c4.cotidiano', 'c4.apps', 'Cada frase descreve qual conceito da U1?', ['Identidade digital', 'Tecnologia cognitiva', 'Internet das Coisas', 'Experiência do usuário'], [
+  ['O conjunto do que você publica, comenta e curte, e a reputação que isso forma', 0, 'Conteúdos, interações e comportamento online.'],
+  ['Um aplicativo de saúde que analisa seus dados e recomenda o que fazer', 1, 'Aprende com dados e apoia a decisão.'],
+  ['Semáforos e sensores de trânsito trocando dados em tempo real', 2, 'Dispositivos e infraestrutura conectados.'],
+  ['O site da loja carrega rápido e é fácil achar o botão de comprar', 3, 'Usabilidade, clareza, rapidez: UX.'],
+  ['O perfil profissional que um recrutador encontra ao buscar o seu nome', 0, 'Como você é percebido no ambiente digital.'],
+  ['Um aplicativo de tarefas que sugere o que priorizar hoje', 1, 'Extensão da capacidade de análise e decisão.'],
+  ['Uma máquina da fábrica que avisa sozinha que vai precisar de manutenção', 2, 'Sensor conectado: manutenção preditiva.'],
+  ['O cliente desiste da compra porque o cadastro é confuso', 3, 'Falha de experiência custa o consumidor.'],
+], ['Pergunte do que a frase fala: de como você aparece, de um sistema que ajuda a pensar, de objetos conectados ou de facilidade de uso.', 'Identidade: sua imagem online. Cognitiva: apoia decisão. IoT: coisas com sensores em rede. UX: facilidade e qualidade do uso.'], 'Identidade digital é a sua representação online. Tecnologias cognitivas ampliam análise, aprendizado e decisão. IoT conecta sensores e dispositivos. Experiência do usuário é a qualidade do uso de um site ou aplicativo.');
+const atores = classifica('c4.ator', 'c4.ecossistema', 'Cada contribuição é de qual ator do ecossistema de inovação?', ['Startups', 'Universidades', 'Governo', 'Investidores', 'Hubs'], [
+  ['Criar soluções inovadoras e novos modelos de negócio', 0, 'É o papel das startups na questão do curso.'],
+  ['Formar profissionais qualificados e produzir conhecimento', 1, 'Ensino e pesquisa.'],
+  ['Formular políticas públicas e incentivos à inovação', 2, 'Regras, fomento e incentivo.'],
+  ['Colocar capital de risco em negócios que podem crescer muito', 3, 'Dinheiro em troca de participação no crescimento.'],
+  ['Integrar os atores, oferecer infraestrutura e apoiar o empreendedorismo', 4, 'O hub é o ponto de encontro.'],
+  ['Testar uma hipótese de negócio com um produto mínimo', 0, 'Experimentação sob incerteza.'],
+  ['Ajustar o currículo às demandas do mercado de tecnologia', 1, 'Aconteceu no caso Nova Esperança.'],
+  ['Reduzir barreiras regulatórias e investir em infraestrutura digital', 2, 'Só o poder público faz isso.'],
+  ['Escolher em quais startups apostar olhando a escalabilidade', 3, 'A escalabilidade é o atrativo para quem investe.'],
+  ['Reunir mentores, empreendedores e empresas num mesmo espaço de cocriação', 4, 'Ambiente colaborativo e rede de mentoria.'],
+], ['Quem cria o produto? Quem forma gente? Quem faz as regras? Quem põe o dinheiro? Quem junta todo mundo?', 'Startups: soluções. Universidades: conhecimento e gente. Governo: políticas. Investidores: capital. Hubs: integração.'], 'Startups criam soluções e modelos de negócio; universidades formam profissionais e produzem conhecimento; o governo faz políticas públicas e incentivos; investidores trazem capital; hubs integram os atores.');
+const estagios = classifica('c4.estagio', 'c4.startups', 'Cada situação é de qual estágio de uma startup?', ['Ideação', 'Validação', 'Tração', 'Escala'], [
+  ['A equipe pesquisa o público e define a proposta de valor', 0, 'Ainda não há produto: há um problema e uma ideia.'],
+  ['Um produto mínimo viável (MVP) é testado com usuários reais', 1, 'O MVP é a marca da validação.'],
+  ['A base de clientes cresce mês a mês e a receita aumenta', 2, 'O modelo funciona e ganha força.'],
+  ['A empresa se expande para outros estados e países, com processos automatizados', 3, 'Expansão nacional ou internacional.'],
+  ['Alguém percebe um problema real que ninguém resolveu', 0, 'A origem da ideia.'],
+  ['A equipe descobre se as pessoas pagariam pela solução', 1, 'Verificar se o mercado quer.'],
+  ['O modelo de negócio se consolida', 2, 'Consolidação vem com o crescimento.'],
+  ['Milhões de usuários atendidos sem aumento proporcional dos custos', 3, 'É a escalabilidade acontecendo.'],
+], ['A ordem é: ideia, teste, crescimento, expansão.', 'Problema e pesquisa: ideação. MVP e teste: validação. Clientes e receita crescendo: tração. Expansão: escala.'], 'Ideação (a ideia e o problema), validação (MVP testado com usuários reais), tração (crescimento de clientes e receita) e escala (expansão com apoio de tecnologia e automação).');
+const principios = classifica('c4.lgpd', 'c4.lgpd', 'Cada situação fere principalmente qual princípio da LGPD?', ['Finalidade', 'Necessidade', 'Transparência', 'Segurança'], [
+  ['A farmácia pede o CPF "para o desconto" e usa para montar um perfil de saúde e vender', 0, 'O uso real é outro, diferente do que foi dito.'],
+  ['Um aplicativo de lanterna pede acesso aos seus contatos e à sua localização', 1, 'Dados que a função não exige.'],
+  ['O site coleta dados e não diz em lugar nenhum o que faz com eles', 2, 'A pessoa não é informada.'],
+  ['A planilha de clientes fica numa pasta aberta, sem senha', 3, 'Faltam medidas de proteção.'],
+  ['A escola usa as fotos da matrícula numa propaganda, sem ter dito nada sobre isso', 0, 'Dado coletado para um fim, usado para outro.'],
+  ['O cadastro de uma promoção exige renda e estado civil', 1, 'Coleta além do mínimo.'],
+  ['Os termos de uso têm 40 páginas de linguagem jurídica que ninguém entende', 2, 'Informar de modo que ninguém entende não é informar.'],
+  ['Todos os funcionários usam a mesma senha, que nunca foi trocada', 3, 'Falha de proteção técnica e administrativa.'],
+], ['Usou para outra coisa? Pediu demais? Não explicou? Não protegeu?', 'Finalidade: propósito específico e informado. Necessidade: o mínimo. Transparência: informar com clareza. Segurança: proteger.'], 'Finalidade (propósito específico, sem desvio), necessidade (o mínimo de dados), transparência (informação clara à pessoa) e segurança (medidas de proteção).');
+
+export const GERADORES_EXP: Record<string, Gerador> = { 'c4.cotidiano': cotidiano, 'c4.ator': atores, 'c4.estagio': estagios, 'c4.lgpd': principios, 'c3.tipo': tipoAprendizado, 'c3.autoia': autoOuIa, 'c3.prompt': partesPrompt, 'c1.vazao': vazaoDownload, 'c1.modelo': modeloNuvem, 'c1.rede': redes, 'c1.triade': triade, 'c2.digtrans': digOuTransf, 'c2.erpcrm': erpOuCrm, 'c2.rogers': dominios };

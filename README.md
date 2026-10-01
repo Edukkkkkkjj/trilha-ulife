@@ -16,11 +16,15 @@ Funciona no celular e no computador, e continua funcionando sem internet depois 
 | M6 | Grafos (U7) | pronta |
 | M7 | Integração: indução, recorrência e Aegis-Grid (U8) | pronta |
 | Simulados | A1 dissertativa e A2 objetiva (duas versões) de Matemática | prontos |
-| C1 a C4 | Exploração Digital | em obras (só os cartões de revisão) |
+| C1 | Exploração · U3 Infraestrutura | pronta |
+| C2 | Exploração · U4 + U2 Sistemas e transformação digital | pronta |
+| C3 | Exploração · U5 + U6 IA, automação, no-code | pronta |
+| C4 | Exploração · U1 + U7 + U8 Cotidiano, inovação, ética e LGPD (com o roteiro da A3) | pronta |
+| Simulados | A1 dissertativa e A2 objetiva (duas versões) de Exploração | prontos |
 
 Cada região pronta tem aulas que ensinam do zero, laboratório, resumo, questões reais da plataforma (com a fonte) e um chefão.
 
-Ilustrações vivas prontas (12): Venn vivo, Máquina de funções, Painel de interruptores, Bancada de circuitos, Árvore de contagem, Simulador de probabilidade, Plano de vetores, Transformação por matriz, Retas do sistema, Editor de grafos, Dominós da indução e Aegis-Grid. Todas ficam também em **Mais → Brincar**, em modo livre.
+Ilustrações vivas prontas (22): Venn vivo, Máquina de funções, Painel de interruptores, Bancada de circuitos, Árvore de contagem, Simulador de probabilidade, Plano de vetores, Transformação por matriz, Retas do sistema, Editor de grafos, Dominós da indução, Aegis-Grid, Cano de dados, Pilha da nuvem, Empresa com silos, Treinador de modelo, Automação × IA, Gerador de texto, O feed e o algoritmo, Escala: loja × aplicativo, Laboratório de viés, Cadastro e LGPD.
 
 ## Como abrir no computador
 

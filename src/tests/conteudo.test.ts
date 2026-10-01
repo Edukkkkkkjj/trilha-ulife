@@ -27,12 +27,16 @@ import { DESAFIOS_SILOS } from '../components/toys/Exp1';
 import { DESAFIOS_TREINO } from '../components/toys/Exp2';
 import { DESAFIOS_SPAM } from '../components/toys/Exp2';
 import { DESAFIOS_GERADOR } from '../components/toys/Exp2';
+import { DESAFIOS_FEED } from '../components/toys/Exp3';
+import { DESAFIOS_ESCALA } from '../components/toys/Exp3';
+import { DESAFIOS_VIES } from '../components/toys/Exp3';
+import { DESAFIOS_LGPD } from '../components/toys/Exp3';
 import type { Ex } from '../engine/types';
 
 const fases = todasFases();
 const fixos: Ex[] = fases.flatMap((f) => f.steps.flatMap((s) => (s.t === 'ex' ? [s.ex] : [])));
 const porId = (id: string) => { const e = fixos.find((x) => x.id === id); if (!e) throw new Error('não achei ' + id); return e; };
-const DESAFIOS: Record<string, string[]> = { gerador: DESAFIOS_GERADOR.map((d) => d.id), spam: DESAFIOS_SPAM.map((d) => d.id), treinador: DESAFIOS_TREINO.map((d) => d.id), silos: DESAFIOS_SILOS.map((d) => d.id), pilha: DESAFIOS_PILHA.map((d) => d.id), cano: DESAFIOS_CANO.map((d) => d.id), aegis: DESAFIOS_AEG.map((d) => d.id), dominos: DESAFIOS_DOM.map((d) => d.id), grafos: DESAFIOS_GRAFO.map((d) => d.id), retas: DESAFIOS_RET.map((d) => d.id), matriz: DESAFIOS_MAT.map((d) => d.id), vetores: DESAFIOS_VET.map((d) => d.id), simulador: DESAFIOS_SIM.map((d) => d.id), venn: DESAFIOS_VENN.map((d) => d.id), interruptores: DESAFIOS_INT.map((d) => d.id), bancada: DESAFIOS_BANCADA.map((d) => d.id), funcoes: DESAFIOS_FN.map((d) => d.id), arvore: DESAFIOS_ARVORE.map((d) => d.id) };
+const DESAFIOS: Record<string, string[]> = { lgpd: DESAFIOS_LGPD.map((d) => d.id), vies: DESAFIOS_VIES.map((d) => d.id), escala: DESAFIOS_ESCALA.map((d) => d.id), feed: DESAFIOS_FEED.map((d) => d.id), gerador: DESAFIOS_GERADOR.map((d) => d.id), spam: DESAFIOS_SPAM.map((d) => d.id), treinador: DESAFIOS_TREINO.map((d) => d.id), silos: DESAFIOS_SILOS.map((d) => d.id), pilha: DESAFIOS_PILHA.map((d) => d.id), cano: DESAFIOS_CANO.map((d) => d.id), aegis: DESAFIOS_AEG.map((d) => d.id), dominos: DESAFIOS_DOM.map((d) => d.id), grafos: DESAFIOS_GRAFO.map((d) => d.id), retas: DESAFIOS_RET.map((d) => d.id), matriz: DESAFIOS_MAT.map((d) => d.id), vetores: DESAFIOS_VET.map((d) => d.id), simulador: DESAFIOS_SIM.map((d) => d.id), venn: DESAFIOS_VENN.map((d) => d.id), interruptores: DESAFIOS_INT.map((d) => d.id), bancada: DESAFIOS_BANCADA.map((d) => d.id), funcoes: DESAFIOS_FN.map((d) => d.id), arvore: DESAFIOS_ARVORE.map((d) => d.id) };
 
 describe('integridade do conteúdo', () => {
   it('ids únicos: fases, exercícios, cartões e erros do material', () => {

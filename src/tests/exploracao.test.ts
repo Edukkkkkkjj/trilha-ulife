@@ -106,3 +106,85 @@ describe('C3 · modelos de brinquedo', () => {
     ok(DESAFIOS_GERADOR, 'ge-prompt', { corpus: 1, texto: ['a', 'rede', 'liga', 'o', 'servidor'] });
   });
 });
+
+// ---------------- C4 ----------------
+import { CAMPOS, CORTES, DESAFIOS_ESCALA, DESAFIOS_FEED, DESAFIOS_LGPD, DESAFIOS_VIES, GRUPO_A, GRUPO_B, NIVEIS, POSTS, PRINCIPIOS, balanco, conformes, custoApp, custoLoja, falsosNoTopo, feed, type EstadoLgpd } from '../components/toys/Exp3';
+import { IDS_A2_EXP, SIMULADOS_EXP } from '../content/exp/simulados';
+import { todasFases } from '../content';
+
+describe('C4 · feed, escala, viés e LGPD', () => {
+  it('feed: por ordem de chegada nenhum falso no topo; por engajamento, dois; curtir um assunto fecha a bolha', () => {
+    expect(falsosNoTopo({ ordem: 'tempo', curtidas: [] })).toBe(0);
+    expect(falsosNoTopo({ ordem: 'engaj', curtidas: [] })).toBe(2);
+    expect(feed({ ordem: 'pessoal', curtidas: [] }).map((p) => p.id)).toEqual(feed({ ordem: 'engaj', curtidas: [] }).map((p) => p.id));
+    for (const tema of ['política', 'igreja', 'saúde']) {
+      const ids = POSTS.filter((p) => p.tema === tema).map((p) => p.id);
+      expect(ids).toHaveLength(2);
+      const f = feed({ ordem: 'pessoal', curtidas: ids });
+      expect([f[0].tema, f[1].tema]).toEqual([tema, tema]);
+      expect(DESAFIOS_FEED[1].falta({ ordem: 'pessoal', curtidas: ids })).toBeNull();
+    }
+    expect(DESAFIOS_FEED[0].falta({ ordem: 'engaj', curtidas: [] })).toBeNull();
+  });
+  it('escala: o aplicativo vira mais barato por cliente a partir de 2.000; a 1 milhão custa 0,22 contra 13,00', () => {
+    expect(NIVEIS.find((n) => custoApp(n) < custoLoja(n))).toBe(2000);
+    expect(custoLoja(1000)).toBe(13000); expect(custoApp(1000)).toBe(20200);
+    expect(custoApp(1e6) / 1e6).toBeCloseTo(0.22, 10); expect(custoLoja(1e6) / 1e6).toBeCloseTo(13, 10);
+    expect([custoApp(100, true), custoApp(100)]).toEqual([2020, 20020]);
+    expect(DESAFIOS_ESCALA[0].falta({ i: NIVEIS.indexOf(2000), mvp: false })).toBeNull();
+    expect(DESAFIOS_ESCALA[0].falta({ i: NIVEIS.indexOf(1000), mvp: false })).not.toBeNull();
+    expect(DESAFIOS_ESCALA[1].falta({ i: NIVEIS.length - 1, mvp: false })).toBeNull();
+    expect(DESAFIOS_ESCALA[2].falta({ i: 1, mvp: true })).toBeNull();
+  });
+  it('viés: mesmos bons pagadores, notas 15 pontos abaixo; mesma regra e mesmo resultado nunca coincidem', () => {
+    expect(GRUPO_A.filter((p) => p.bom)).toHaveLength(5); expect(GRUPO_B.filter((p) => p.bom)).toHaveLength(5);
+    GRUPO_A.forEach((p, i) => expect(p.nota - GRUPO_B[i].nota).toBe(15));
+    expect([balanco(GRUPO_A, 65).aprovados, balanco(GRUPO_B, 65).aprovados]).toEqual([4, 1]);
+    expect(balanco(GRUPO_B, 50).aprovados).toBe(4);
+    expect(balanco(GRUPO_A, 65)).toEqual({ aprovados: 4, bonsRecusados: 1, mausAprovados: 0 });
+    for (const c of CORTES) { const a = balanco(GRUPO_A, c).aprovados, b = balanco(GRUPO_B, c).aprovados; if (a === b) expect(a === 0 || a === 8, 'corte ' + c).toBe(true); }
+    const imp = DESAFIOS_VIES.find((d) => d.id === 'vi-impossivel')!;
+    expect(imp.impossivel).toBeTruthy();
+    for (const cA of CORTES) for (const cB of CORTES) for (const junto of [true, false]) if (cA === cB) expect(imp.falta({ cA, cB, junto })).not.toBeNull();
+    expect(DESAFIOS_VIES[0].falta({ cA: 65, cB: 65, junto: true })).toBeNull();
+    expect(DESAFIOS_VIES[1].falta({ cA: 65, cB: 50, junto: false })).toBeNull();
+  });
+  it('LGPD: seis princípios; repassar a lista fere só a adequação; o mínimo é nome e telefone', () => {
+    expect(PRINCIPIOS.map((p) => p.id)).toEqual(['finalidade', 'adequacao', 'necessidade', 'transparencia', 'seguranca', 'responsabilizacao']);
+    expect(CAMPOS.filter((c) => c.precisa).map((c) => c.id)).toEqual(['nome', 'telefone']);
+    const bom: EstadoLgpd = { campos: ['nome', 'telefone'], fim: true, aviso: true, extra: false, acesso: true, registro: true };
+    expect(conformes(bom)).toBe(6);
+    expect(PRINCIPIOS.filter((p) => !p.ok({ ...bom, extra: true })).map((p) => p.id)).toEqual(['adequacao']);
+    expect(PRINCIPIOS.filter((p) => !p.ok({ ...bom, campos: ['nome', 'telefone', 'cpf'] })).map((p) => p.id)).toEqual(['necessidade']);
+    for (const d of DESAFIOS_LGPD) expect(d.falta(bom), d.id).toBeNull();
+    expect(DESAFIOS_LGPD[2].falta({ ...bom, campos: [] })).not.toBeNull();
+  });
+  it('desafios da C4 começam por resolver', () => {
+    for (const d of [...DESAFIOS_FEED, ...DESAFIOS_ESCALA, ...DESAFIOS_VIES, ...DESAFIOS_LGPD] as any[]) expect(d.falta(d.ini), d.id).not.toBeNull();
+  });
+});
+
+describe('simulados de Exploração', () => {
+  const fase = (id: string) => SIMULADOS_EXP.fases.find((f) => f.id === id)!;
+  it('A2: cada questão é cópia fiel de uma questão com fonte da plataforma; cobre as 4 camadas; sem repetição', () => {
+    const originais = todasFases().filter((f) => !f.regiao.simulado).flatMap((f) => f.steps.flatMap((s) => (s.t === 'ex' ? [s.ex] : [])));
+    for (const letra of ['a', 'b'] as const) {
+      const exs = fase('cs-a2' + letra).steps.flatMap((s) => (s.t === 'ex' ? [s.ex] : []));
+      expect(exs).toHaveLength(16);
+      IDS_A2_EXP[letra].forEach((id, i) => {
+        const o = originais.find((x) => x.id === id)!;
+        expect(o.fonte, id).toMatch(/^U\d/);
+        expect(exs[i].prompt).toBe(o.prompt);
+        if ((o.kind === 'mcq' || o.kind === 'multi') && exs[i].kind === o.kind) expect((exs[i] as typeof o).correct).toEqual(o.correct);
+      });
+      expect(new Set(IDS_A2_EXP[letra].map((id) => id.slice(0, 2))).size).toBe(4);
+      expect(new Set(IDS_A2_EXP[letra].map((id) => originais.find((x) => x.id === id)!.fonte!.slice(0, 2))).size).toBe(8); // as oito unidades
+    }
+    expect(IDS_A2_EXP.a.filter((id) => IDS_A2_EXP.b.includes(id))).toEqual([]);
+  });
+  it('A1: quatro dissertativas com modelo e rubrica de 6 itens', () => {
+    const esc = fase('cs-a1').steps.filter((s) => s.t === 'escrita');
+    expect(esc).toHaveLength(4);
+    for (const s of esc) if (s.t === 'escrita') { expect(s.modelo.length).toBeGreaterThan(300); expect(s.rubrica).toHaveLength(6); }
+  });
+});

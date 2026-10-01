@@ -9,6 +9,8 @@ import { M6 } from './mat/m6';
 import { M7 } from './mat/m7';
 import { SIMULADOS_MAT } from './mat/simulados';
 import { CARDS_EXP } from './exp/cards';
+import { SIMULADOS_EXP } from './exp/simulados';
+import { C4 } from './exp/c4';
 import { C3 } from './exp/c3';
 import { C2 } from './exp/c2';
 import { C1 } from './exp/c1';
@@ -27,7 +29,8 @@ export const REGIOES: Regiao[] = [
   C1,
   C2,
   C3,
-  emObras('c4', 'exp', 'O mundo em volta', 'U1 + U7 + U8', 'Onde a tecnologia encosta em gente.', CARDS_EXP.filter((c) => c.regiao === 'c4')),
+  C4,
+  SIMULADOS_EXP,
 ];
 
 export const MUNDOS = [
@@ -54,6 +57,7 @@ export const TOPICOS: Record<string, string> = {
   'm7.inducao': 'Indução matemática', 'm7.recorrencia': 'Recorrência', 'm7.integracao': 'Aegis-Grid: integração das ferramentas',
   'c1.conectividade': 'Conectividade: banda e latência', 'c1.redes': 'Redes, dispositivos de rede e protocolos', 'c1.nuvem': 'Computação em nuvem (IaaS, PaaS, SaaS)', 'c1.dispositivos': 'Dispositivos, sistemas operacionais e data centers', 'c1.seguranca': 'Segurança da informação', 'c2.silos': 'Silos e integração de sistemas', 'c2.erpcrm': 'ERP e CRM', 'c2.fluxo': 'Fluxo de dados', 'c2.lowcode': 'Automação e low-code', 'c2.transformacao': 'Digitalização × transformação digital', 'c2.rogers': 'Os cinco domínios de Rogers', 'c2.tecnologias': 'Tecnologias emergentes', 'c2.etica': 'Implicações éticas, sociais e profissionais',
   'c3.fundamentos': 'IA, automação e sistemas inteligentes', 'c3.aprendizado': 'Aprendizado de máquina e dados', 'c3.generativa': 'IA generativa', 'c3.prompt': 'Engenharia de prompt', 'c3.nocode': 'Ferramentas no-code', 'c3.automacao': 'Automação no cotidiano e nas organizações', 'c3.etica': 'Ética e viés na IA',
+  'c4.redes': 'Redes sociais e identidade digital', 'c4.apps': 'Aplicativos, tecnologias cognitivas e e-commerce', 'c4.mobilidade': 'IoT, mobilidade e futuro do trabalho', 'c4.ecossistema': 'Ecossistemas de inovação e seus atores', 'c4.startups': 'Startups, estágios e escalabilidade', 'c4.impactos': 'Impactos socioeconômicos da inovação', 'c4.etica': 'Dilemas éticos e governança de algoritmos', 'c4.lgpd': 'LGPD e cidadania digital', 'c4.ameacas': 'Ameaças digitais e prevenção', 'c4.integracao': 'Integração das oito unidades (A3)',
 };
 export const nomeTopico = (t: string) => TOPICOS[t] ?? t;
 export const regiaoDoTopico = (t: string) => t.split('.')[0];
