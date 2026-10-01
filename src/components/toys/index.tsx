@@ -15,6 +15,9 @@ import { AegisGrid } from './Integracao';
 import { CanoDados } from './Exp1';
 import { PilhaNuvem } from './Exp1';
 import { EmpresaSilos } from './Exp1';
+import { TreinadorModelo } from './Exp2';
+import { AutomacaoIA } from './Exp2';
+import { GeradorTexto } from './Exp2';
 
 export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string; C: (p: ToyProps) => React.JSX.Element }> = {
   venn: { nome: 'Venn vivo', resumo: 'Arraste elementos entre os círculos; conjuntos, contagens e inclusão-exclusão se recalculam.', regiao: 'M1', C: VennVivo },
@@ -31,6 +34,9 @@ export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string;
   cano: { nome: 'Cano de dados', resumo: 'Banda é a grossura, latência é o comprimento. Veja quais usos sobrevivem e por que uma janela pequena estrangula um link gordo.', regiao: 'C1', C: CanoDados },
   pilha: { nome: 'Pilha da nuvem', resumo: 'Sete camadas, do prédio ao programa. Decida quem cuida de cada uma e veja se o resultado é IaaS, PaaS ou SaaS.', regiao: 'C1', C: PilhaNuvem },
   silos: { nome: 'Empresa com silos', resumo: 'Três setores, cada um com a sua planilha. Venda, receba mercadoria e veja os números divergirem; depois integre.', regiao: 'C2', C: EmpresaSilos },
+  treinador: { nome: 'Treinador de modelo', resumo: 'Ajuste uma reta aos dados na mão e depois deixe a máquina treinar. Aprender é diminuir o erro; um dado ruim entorta tudo.', regiao: 'C3', C: TreinadorModelo },
+  spam: { nome: 'Automação × IA', resumo: 'O mesmo filtro de spam feito com regra escrita e com exemplos rotulados. Ensine errado e veja o viés nascer.', regiao: 'C3', C: AutomacaoIA },
+  gerador: { nome: 'Gerador de texto', resumo: 'Um modelo de linguagem minúsculo: ele só sabe que palavra costuma vir depois de qual. Escreva com ele e mude o prompt.', regiao: 'C3', C: GeradorTexto },
   bancada: { nome: 'Bancada de circuitos',resumo: 'Arraste portas, ligue fios, veja o sinal passar. O jogo escreve a expressão do que você montou.', regiao: 'M2', C: Bancada },
 };
 

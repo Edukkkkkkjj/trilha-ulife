@@ -61,3 +61,48 @@ describe('geradores de Exploração', () => {
     }
   });
 });
+
+// ---------------- C3 ----------------
+import { DESAFIOS_GERADOR, DESAFIOS_SPAM, DESAFIOS_TREINO, classificador, repete, treinar } from '../components/toys/Exp2';
+import { CORPORA, PONTOS, TESTE, TREINO, acertos, bigramas, dados, erro, melhorReta, pesos, porModelo, porRegra, proximas } from '../lib/aprendizado';
+
+describe('C3 · modelos de brinquedo', () => {
+  it('a reta: treinar diminui o erro e chega perto da melhor reta; um dado estranho entorta', () => {
+    let s = { a: 0, b: 0, passos: 0, estranho: false };
+    const e0 = erro(s.a, s.b, PONTOS);
+    s = treinar(s, 2); expect(erro(s.a, s.b, PONTOS)).toBeLessThan(0.25); expect(erro(s.a, s.b, PONTOS)).toBeLessThan(e0);
+    const [ma, mb] = melhorReta(PONTOS); expect(ma).toBeCloseTo(2, 0); expect(erro(ma, mb, PONTOS)).toBeLessThan(0.2);
+    const t = treinar({ a: ma, b: mb, passos: 0, estranho: true }, 300);
+    expect(t.a).toBeLessThan(1.8); expect(erro(t.a, t.b, PONTOS)).toBeGreaterThan(1); // piorou para os dados bons
+    expect(erro(2, 1, PONTOS)).toBeCloseTo(0.12375, 5);
+    expect(dados(true)).toHaveLength(9);
+  });
+  it('spam: regra boa e modelo aprendido acertam 4 de 4; rótulos errados ensinam o erro', () => {
+    expect(acertos(TESTE, (m) => porRegra(m, ['grátis', 'promoção', 'clique']))).toBe(4);
+    expect(acertos(TESTE, (m) => porRegra(m, ['urgente']))).toBeLessThan(4);
+    const w = pesos(TREINO.map((m) => ({ m, rotulo: m.spam })));
+    expect(w).toMatchObject({ grátis: 2, promoção: 2, clique: 2, urgente: 0, reunião: -2, pix: -1 });
+    expect(acertos(TESTE, (m) => porModelo(m, w))).toBe(4);
+    const torto = { modo: 'ia' as const, regra: [], rotulos: TREINO.map((m) => m.spam || m.palavras.includes('reunião')) };
+    expect(classificador(torto)(TESTE[1])).toBe(true); // "Reunião urgente amanhã cedo" barrada
+  });
+  it('gerador: as chances somam 1 e a escolha gulosa entra em círculo', () => {
+    for (const c of CORPORA) { const t = bigramas(c.frases); for (const p of Object.keys(t)) expect(proximas(t, p).reduce((a, o) => a + o.prob, 0)).toBeCloseTo(1, 10); }
+    const t = bigramas([...CORPORA[0].frases, ...CORPORA[1].frases]);
+    const texto = ['o'];
+    for (let i = 0; i < 12 && !repete(texto); i++) { const u = texto[texto.length - 1]; texto.push(u === '.' ? 'a' : proximas(t, u)[0].p); }
+    expect(repete(texto)).toBe(true);
+    expect(proximas(bigramas(CORPORA[0].frases), 'o').map((o) => o.p)).toEqual(['louvor', 'pastor']);
+  });
+  it('desafios da C3 começam por resolver e têm solução', () => {
+    for (const d of [...DESAFIOS_TREINO, ...DESAFIOS_SPAM, ...DESAFIOS_GERADOR] as any[]) expect(d.falta(d.ini), d.id).not.toBeNull();
+    const ok = (lista: any[], id: string, s: object) => { const d = lista.find((x) => x.id === id); expect(d.falta({ ...d.ini, ...s }), id).toBeNull(); };
+    ok(DESAFIOS_TREINO, 'tr-mao', { a: 2, b: 1 });
+    expect(DESAFIOS_TREINO[1].falta(treinar(DESAFIOS_TREINO[1].ini, 3))).toBeNull();
+    expect(DESAFIOS_TREINO[2].falta(treinar({ ...DESAFIOS_TREINO[2].ini, estranho: true }, 300))).toBeNull();
+    ok(DESAFIOS_SPAM, 'sp-regra', { regra: ['grátis', 'clique'] }); ok(DESAFIOS_SPAM, 'sp-modelo', { modo: 'ia' });
+    ok(DESAFIOS_SPAM, 'sp-vies', { rotulos: TREINO.map((m) => m.spam || m.palavras.includes('reunião')) });
+    ok(DESAFIOS_GERADOR, 'ge-frase', { texto: ['o', 'pastor', 'ora', 'pela', 'igreja'] });
+    ok(DESAFIOS_GERADOR, 'ge-prompt', { corpus: 1, texto: ['a', 'rede', 'liga', 'o', 'servidor'] });
+  });
+});

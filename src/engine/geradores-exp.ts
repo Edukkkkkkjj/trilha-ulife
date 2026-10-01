@@ -79,4 +79,36 @@ const dominios = classifica('c2.rogers', 'c2.rogers', 'Cada frase pertence a qua
   ['Decisões orientadas por análise em vez de intuição', 2, 'Domínio dos dados.'], ['A proposta da empresa precisa evoluir antes de ficar obsoleta', 4, 'Domínio do valor.'],
 ], ['Os cinco: clientes, competição, dados, inovação e valor.', 'Pergunte de quem ou do que a frase fala: de quem compra, de quem concorre, da informação, de como se cria o novo, ou do que se entrega.'], 'Os cinco domínios de Rogers: clientes, competição, dados, inovação e valor.');
 
-export const GERADORES_EXP: Record<string, Gerador> = { 'c1.vazao': vazaoDownload, 'c1.modelo': modeloNuvem, 'c1.rede': redes, 'c1.triade': triade, 'c2.digtrans': digOuTransf, 'c2.erpcrm': erpOuCrm, 'c2.rogers': dominios };
+// ---------- C3 ----------
+const tipoAprendizado = classifica('c3.tipo', 'c3.aprendizado', 'Cada situação é qual tipo de aprendizado de máquina?', ['Supervisionado', 'Não supervisionado', 'Por reforço'], [
+  ['Treinar com e-mails já marcados como "spam" ou "não spam"', 0, 'Os exemplos vêm com a resposta certa (rótulo).'],
+  ['Agrupar clientes por semelhança, sem dizer de antemão quais grupos existem', 1, 'Sem rótulos: o algoritmo descobre os grupos (k-means).'],
+  ['Um robô que aprende a andar ganhando pontos quando avança e perdendo quando cai', 2, 'Tentativa, erro e recompensa.'],
+  ['Prever o preço de um imóvel a partir de imóveis vendidos, com seus preços', 0, 'Exemplos com a resposta: regressão.'],
+  ['Reduzir uma planilha de 200 colunas para as poucas que mais explicam os dados', 1, 'Redução de dimensionalidade (PCA): não há rótulo.'],
+  ['Um programa que aprende a jogar xadrez jogando contra si mesmo', 2, 'Aprende pelas consequências das jogadas (Q-learning e parecidos).'],
+  ['Classificar exames como "normal" ou "alterado" a partir de exames já laudados', 0, 'Rótulos dados por especialistas.'],
+  ['Descobrir padrões de compra que ninguém tinha pensado em procurar', 1, 'Exploração sem resposta pronta.'],
+], ['Há exemplos com a resposta certa? Não há resposta nenhuma? Ou há recompensa e punição?', 'Com rótulo: supervisionado. Sem rótulo, achando grupos: não supervisionado. Tentativa e recompensa: reforço.'], 'Supervisionado: aprende com exemplos rotulados. Não supervisionado: acha estrutura em dados sem rótulo. Por reforço: aprende por tentativa, erro e recompensa.');
+const autoOuIa = classifica('c3.autoia', 'c3.fundamentos', 'Cada sistema é automação (regra fixa), IA (aprende com dados) ou sistema inteligente (IA + sensores + ação)?', ['Automação', 'IA', 'Sistema inteligente'], [
+  ['Um robô de software (RPA) que copia dados de um formulário para outro sistema, sempre do mesmo jeito', 0, 'Processo estruturado, regra fixa: RPA é automação, não IA.'],
+  ['Um sistema que recomenda filmes com base no que você já assistiu', 1, 'Aprende preferências a partir de dados.'],
+  ['Semáforos que percebem o trânsito por sensores e ajustam os tempos sozinhos', 2, 'Percebe o ambiente, processa e age: é o exemplo do curso (controle de tráfego).'],
+  ['Emissão de nota fiscal a cada venda registrada', 0, 'Tarefa repetitiva com regra predefinida.'],
+  ['Um modelo que estima o risco de um aluno abandonar o curso', 1, 'IA preditiva: analisa dados para prever.'],
+  ['Uma casa que acende, aquece e tranca conforme os hábitos dos moradores', 2, 'Casa inteligente: sensores + aprendizado + ação.'],
+  ['Envio automático de e-mail quando um formulário é preenchido', 0, 'Gatilho e ação fixos.'],
+  ['Um filtro que aprende sozinho a reconhecer novos tipos de spam', 1, 'Adapta-se com a experiência.'],
+], ['Pergunte: ele APRENDE? E ele PERCEBE o ambiente e AGE sozinho?', 'Só segue regra: automação. Aprende e infere: IA. Aprende, percebe por sensores e age: sistema inteligente.'], 'Automação executa regras predefinidas e não aprende. IA aprende, infere e decide com base em dados. Sistema inteligente combina automação, IA, sensores, dados e redes para perceber e agir.');
+const partesPrompt = classifica('c3.prompt', 'c3.prompt', 'Um bom prompt tem contexto, objetivo e instrução clara. Cada trecho abaixo é qual parte?', ['Contexto', 'Objetivo', 'Instrução'], [
+  ['"Sou líder de louvor de uma igreja pequena, com músicos iniciantes."', 0, 'Diz quem pede e em que situação.'],
+  ['"Quero que o ensaio de quinta renda mais."', 1, 'Diz para que serve o resultado.'],
+  ['"Monte um roteiro de 60 minutos, em tópicos, com o tempo de cada parte."', 2, 'Diz o que fazer e em que formato.'],
+  ['"Somos uma loja de bairro que vende pelo Instagram."', 0, 'Situação de quem pede.'],
+  ['"Preciso aumentar as vendas no Dia das Mães."', 1, 'A finalidade.'],
+  ['"Escreva três legendas curtas, em tom informal, sem emojis."', 2, 'Tarefa e formato.'],
+  ['"O público são alunos do primeiro semestre, que nunca programaram."', 0, 'Para quem é: contexto.'],
+  ['"Responda em uma tabela de duas colunas."', 2, 'Formato da resposta: instrução.'],
+], ['Contexto: a situação. Objetivo: para quê. Instrução: o que fazer e como entregar.', 'Quem, onde e para quem: contexto. A finalidade: objetivo. O verbo de comando e o formato: instrução.'], 'Contexto (a situação e o público), objetivo (para que serve) e instrução clara (a tarefa e o formato da resposta).');
+
+export const GERADORES_EXP: Record<string, Gerador> = { 'c3.tipo': tipoAprendizado, 'c3.autoia': autoOuIa, 'c3.prompt': partesPrompt, 'c1.vazao': vazaoDownload, 'c1.modelo': modeloNuvem, 'c1.rede': redes, 'c1.triade': triade, 'c2.digtrans': digOuTransf, 'c2.erpcrm': erpOuCrm, 'c2.rogers': dominios };
