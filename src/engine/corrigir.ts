@@ -10,7 +10,7 @@ export function lerNumero(src: string): number | null {
   let pct = false;
   if (s.endsWith('%')) { pct = true; s = s.slice(0, -1); }
   const one = (t: string): number | null => {
-    if (/^-?\d{1,3}(\.\d{3})+(,\d+)?$/.test(t)) t = t.replace(/\./g, '');
+    if (/^-?[1-9]\d{0,2}(\.\d{3})+(,\d+)?$/.test(t)) t = t.replace(/\./g, '');
     t = t.replace(',', '.');
     return /^-?(\d+\.?\d*|\.\d+)$/.test(t) ? Number(t) : null;
   };

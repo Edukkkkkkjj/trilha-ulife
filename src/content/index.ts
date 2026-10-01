@@ -3,6 +3,7 @@ import type { Card, Phase, Regiao } from '../engine/types';
 import { M1 } from './mat/m1';
 import { M2 } from './mat/m2';
 import { M3 } from './mat/m3';
+import { M4 } from './mat/m4';
 import { CARDS_EXP } from './exp/cards';
 
 const emObras = (id: string, mundo: 'mat' | 'exp', nome: string, unidades: string, tese: string, cards: Card[] = []): Regiao => ({ id, mundo, nome, unidades, tese, pronto: false, fases: [], cards });
@@ -11,7 +12,7 @@ export const REGIOES: Regiao[] = [
   M1,
   M2,
   M3,
-  emObras('m4', 'mat', 'Probabilidade', 'U5', 'Contagem com denominador: casos favoráveis sobre casos possíveis. Serve para medir risco.'),
+  M4,
   emObras('m5', 'mat', 'Álgebra linear', 'U6', 'Vetores guardam medidas, matrizes transformam dados, sistemas resolvem várias restrições de uma vez.'),
   emObras('m6', 'mat', 'Grafos', 'U7', 'O desenho de "quem liga com quem": redes, dependências, rotas.'),
   emObras('m7', 'mat', 'Integração: Aegis-Grid', 'U8', 'Um problema só, todas as ferramentas. É a base da A3.'),
@@ -39,6 +40,7 @@ export const TOPICOS: Record<string, string> = {
   'm2.equivalencias': 'Equivalências e De Morgan', 'm2.traducao': 'Tradução lógica ↔ booleana', 'm2.precedencia': 'Precedência (· antes de +)', 'm2.simplificacao': 'Leis e simplificação',
   'm2.portas': 'Portas lógicas', 'm2.sop': 'Soma de produtos', 'm2.circuitos': 'Circuitos: mux, decodificador, somador',
   'm3.principios': 'Princípios multiplicativo e aditivo', 'm3.fatorial': 'Fatorial', 'm3.permutacao': 'Permutação e anagramas', 'm3.arranjo': 'Arranjo', 'm3.combinacao': 'Combinação', 'm3.escolha-da-tecnica': 'Qual técnica usar (a ordem importa?)',
+  'm4.classica': 'Espaço amostral e probabilidade clássica', 'm4.regras': 'Regras: complemento, adição, independência', 'm4.condicional': 'Probabilidade condicional e total', 'm4.variaveis': 'Variáveis discretas e contínuas; valor esperado', 'm4.binomial': 'Distribuição binomial', 'm4.normal': 'Distribuição normal',
 };
 export const nomeTopico = (t: string) => TOPICOS[t] ?? t;
 export const regiaoDoTopico = (t: string) => t.split('.')[0];
