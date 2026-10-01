@@ -42,6 +42,7 @@ export const ex = (e: Ex): Step => ({ t: 'ex', ex: e });
 export const gen = (g: string, n = 1): Step => ({ t: 'gen', gen: g, n });
 export const texto = (md: string, selo?: Selo, seloNota?: string): Step => ({ t: 'texto', md, selo, seloNota });
 
-export function cards(mundo: Mundo, regiao: string, pares: [string, string][]): Card[] {
-  return pares.map(([frente, verso], i) => ({ id: `${regiao}-c${i + 1}`, mundo, regiao, frente, verso }));
+/** `inicio`: número do primeiro cartão (para continuar uma lista que já existe). */
+export function cards(mundo: Mundo, regiao: string, pares: [string, string][], inicio = 1): Card[] {
+  return pares.map(([frente, verso], i) => ({ id: `${regiao}-c${i + inicio}`, mundo, regiao, frente, verso }));
 }

@@ -9,6 +9,8 @@ import { M6 } from './mat/m6';
 import { M7 } from './mat/m7';
 import { SIMULADOS_MAT } from './mat/simulados';
 import { CARDS_EXP } from './exp/cards';
+import { C2 } from './exp/c2';
+import { C1 } from './exp/c1';
 
 const emObras = (id: string, mundo: 'mat' | 'exp', nome: string, unidades: string, tese: string, cards: Card[] = []): Regiao => ({ id, mundo, nome, unidades, tese, pronto: false, fases: [], cards });
 
@@ -21,8 +23,8 @@ export const REGIOES: Regiao[] = [
   M6,
   M7,
   SIMULADOS_MAT,
-  emObras('c1', 'exp', 'O encanamento', 'U3', 'O digital tem corpo físico, com limites de energia, distância e tempo.', CARDS_EXP.filter((c) => c.regiao === 'c1')),
-  emObras('c2', 'exp', 'O sistema nervoso da empresa', 'U4 + U2', 'O inimigo é o silo; digitalizar não é transformar.', CARDS_EXP.filter((c) => c.regiao === 'c2')),
+  C1,
+  C2,
   emObras('c3', 'exp', 'A máquina que aprende', 'U5 + U6', 'Automação obedece, IA infere; o que vale agora é saber pedir.', CARDS_EXP.filter((c) => c.regiao === 'c3')),
   emObras('c4', 'exp', 'O mundo em volta', 'U1 + U7 + U8', 'Onde a tecnologia encosta em gente.', CARDS_EXP.filter((c) => c.regiao === 'c4')),
 ];
@@ -49,6 +51,7 @@ export const TOPICOS: Record<string, string> = {
   'm5.vetores': 'Vetores: soma, escalar, produto escalar, norma', 'm5.matrizes': 'Matrizes e produto de matrizes', 'm5.determinante': 'Determinante e inversa', 'm5.sistemas': 'Sistemas lineares: armar, classificar, Cramer', 'm5.gauss': 'Escalonamento (Gauss e Gauss-Jordan)',
   'm6.conceitos': 'Grafos: vértices, arestas, grau, ciclos', 'm6.arvores': 'Árvores', 'm6.representacao': 'Matriz e lista de adjacência; incidência', 'm6.buscas': 'BFS e DFS', 'm6.caminhos': 'Dijkstra, Bellman-Ford e Kruskal', 'm6.escolha': 'Qual algoritmo usar',
   'm7.inducao': 'Indução matemática', 'm7.recorrencia': 'Recorrência', 'm7.integracao': 'Aegis-Grid: integração das ferramentas',
+  'c1.conectividade': 'Conectividade: banda e latência', 'c1.redes': 'Redes, dispositivos de rede e protocolos', 'c1.nuvem': 'Computação em nuvem (IaaS, PaaS, SaaS)', 'c1.dispositivos': 'Dispositivos, sistemas operacionais e data centers', 'c1.seguranca': 'Segurança da informação', 'c2.silos': 'Silos e integração de sistemas', 'c2.erpcrm': 'ERP e CRM', 'c2.fluxo': 'Fluxo de dados', 'c2.lowcode': 'Automação e low-code', 'c2.transformacao': 'Digitalização × transformação digital', 'c2.rogers': 'Os cinco domínios de Rogers', 'c2.tecnologias': 'Tecnologias emergentes', 'c2.etica': 'Implicações éticas, sociais e profissionais',
 };
 export const nomeTopico = (t: string) => TOPICOS[t] ?? t;
 export const regiaoDoTopico = (t: string) => t.split('.')[0];

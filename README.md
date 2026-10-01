@@ -20,7 +20,7 @@ Funciona no celular e no computador, e continua funcionando sem internet depois 
 
 Cada região pronta tem aulas que ensinam do zero, laboratório, resumo, questões reais da plataforma (com a fonte) e um chefão.
 
-Ilustrações vivas prontas (13): Venn vivo, Máquina de funções, Painel de interruptores, Bancada de circuitos, Árvore de contagem, Simulador de probabilidade, Plano de vetores, Transformação por matriz, Retas do sistema, Editor de grafos, Dominós da indução e Aegis-Grid. Todas ficam também em **Mais → Brincar**, em modo livre.
+Ilustrações vivas prontas (12): Venn vivo, Máquina de funções, Painel de interruptores, Bancada de circuitos, Árvore de contagem, Simulador de probabilidade, Plano de vetores, Transformação por matriz, Retas do sistema, Editor de grafos, Dominós da indução e Aegis-Grid. Todas ficam também em **Mais → Brincar**, em modo livre.
 
 ## Como abrir no computador
 

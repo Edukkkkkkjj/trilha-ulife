@@ -12,6 +12,9 @@ import { RetasSistema } from './Linear';
 import { EditorGrafos } from './Grafos';
 import { DominosInducao } from './Integracao';
 import { AegisGrid } from './Integracao';
+import { CanoDados } from './Exp1';
+import { PilhaNuvem } from './Exp1';
+import { EmpresaSilos } from './Exp1';
 
 export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string; C: (p: ToyProps) => React.JSX.Element }> = {
   venn: { nome: 'Venn vivo', resumo: 'Arraste elementos entre os círculos; conjuntos, contagens e inclusão-exclusão se recalculam.', regiao: 'M1', C: VennVivo },
@@ -25,6 +28,9 @@ export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string;
   grafos: { nome: 'Editor de grafos', resumo: 'Desenhe vértices e arestas; veja graus, matrizes e listas ao vivo e rode BFS, DFS, Dijkstra, Bellman-Ford e Kruskal passo a passo.', regiao: 'M6', C: EditorGrafos },
   dominos: { nome: 'Dominós da indução', resumo: 'Caso base e passo indutivo como uma fila de dominós. Quebre um elo, esqueça de empurrar o primeiro e veja a prova parar.', regiao: 'M7', C: DominosInducao },
   aegis: { nome: 'Aegis-Grid', resumo: 'O caso da U8 numa tela: derrube servidor e rotas e veja expressão, tabela-verdade, rede, matriz e risco mudarem juntos.', regiao: 'M7', C: AegisGrid },
+  cano: { nome: 'Cano de dados', resumo: 'Banda é a grossura, latência é o comprimento. Veja quais usos sobrevivem e por que uma janela pequena estrangula um link gordo.', regiao: 'C1', C: CanoDados },
+  pilha: { nome: 'Pilha da nuvem', resumo: 'Sete camadas, do prédio ao programa. Decida quem cuida de cada uma e veja se o resultado é IaaS, PaaS ou SaaS.', regiao: 'C1', C: PilhaNuvem },
+  silos: { nome: 'Empresa com silos', resumo: 'Três setores, cada um com a sua planilha. Venda, receba mercadoria e veja os números divergirem; depois integre.', regiao: 'C2', C: EmpresaSilos },
   bancada: { nome: 'Bancada de circuitos',resumo: 'Arraste portas, ligue fios, veja o sinal passar. O jogo escreve a expressão do que você montou.', regiao: 'M2', C: Bancada },
 };
 
