@@ -6,6 +6,7 @@ import { M3 } from './mat/m3';
 import { M4 } from './mat/m4';
 import { M5 } from './mat/m5';
 import { M6 } from './mat/m6';
+import { M7 } from './mat/m7';
 import { CARDS_EXP } from './exp/cards';
 
 const emObras = (id: string, mundo: 'mat' | 'exp', nome: string, unidades: string, tese: string, cards: Card[] = []): Regiao => ({ id, mundo, nome, unidades, tese, pronto: false, fases: [], cards });
@@ -17,7 +18,7 @@ export const REGIOES: Regiao[] = [
   M4,
   M5,
   M6,
-  emObras('m7', 'mat', 'Integração: Aegis-Grid', 'U8', 'Um problema só, todas as ferramentas. É a base da A3.'),
+  M7,
   emObras('c1', 'exp', 'O encanamento', 'U3', 'O digital tem corpo físico, com limites de energia, distância e tempo.', CARDS_EXP.filter((c) => c.regiao === 'c1')),
   emObras('c2', 'exp', 'O sistema nervoso da empresa', 'U4 + U2', 'O inimigo é o silo; digitalizar não é transformar.', CARDS_EXP.filter((c) => c.regiao === 'c2')),
   emObras('c3', 'exp', 'A máquina que aprende', 'U5 + U6', 'Automação obedece, IA infere; o que vale agora é saber pedir.', CARDS_EXP.filter((c) => c.regiao === 'c3')),
@@ -45,6 +46,7 @@ export const TOPICOS: Record<string, string> = {
   'm4.classica': 'Espaço amostral e probabilidade clássica', 'm4.regras': 'Regras: complemento, adição, independência', 'm4.condicional': 'Probabilidade condicional e total', 'm4.variaveis': 'Variáveis discretas e contínuas; valor esperado', 'm4.binomial': 'Distribuição binomial', 'm4.normal': 'Distribuição normal',
   'm5.vetores': 'Vetores: soma, escalar, produto escalar, norma', 'm5.matrizes': 'Matrizes e produto de matrizes', 'm5.determinante': 'Determinante e inversa', 'm5.sistemas': 'Sistemas lineares: armar, classificar, Cramer', 'm5.gauss': 'Escalonamento (Gauss e Gauss-Jordan)',
   'm6.conceitos': 'Grafos: vértices, arestas, grau, ciclos', 'm6.arvores': 'Árvores', 'm6.representacao': 'Matriz e lista de adjacência; incidência', 'm6.buscas': 'BFS e DFS', 'm6.caminhos': 'Dijkstra, Bellman-Ford e Kruskal', 'm6.escolha': 'Qual algoritmo usar',
+  'm7.inducao': 'Indução matemática', 'm7.recorrencia': 'Recorrência', 'm7.integracao': 'Aegis-Grid: integração das ferramentas',
 };
 export const nomeTopico = (t: string) => TOPICOS[t] ?? t;
 export const regiaoDoTopico = (t: string) => t.split('.')[0];

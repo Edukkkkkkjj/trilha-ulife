@@ -10,6 +10,8 @@ import { PlanoVetores } from './Linear';
 import { TransformaMatriz } from './Linear';
 import { RetasSistema } from './Linear';
 import { EditorGrafos } from './Grafos';
+import { DominosInducao } from './Integracao';
+import { AegisGrid } from './Integracao';
 
 export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string; C: (p: ToyProps) => React.JSX.Element }> = {
   venn: { nome: 'Venn vivo', resumo: 'Arraste elementos entre os círculos; conjuntos, contagens e inclusão-exclusão se recalculam.', regiao: 'M1', C: VennVivo },
@@ -21,6 +23,8 @@ export const TOYS: Record<ToyId, { nome: string; resumo: string; regiao: string;
   matriz: { nome: 'Transformação por matriz', resumo: 'Uma matriz 2×2 deforma o plano. O determinante é o fator de área: quando zera, tudo achata.', regiao: 'M5', C: TransformaMatriz },
   retas: { nome: 'Retas do sistema', resumo: 'Duas equações, duas retas: cruzam (SPD), são paralelas (SI) ou coincidem (SPI). Inclui o caso Telecom.', regiao: 'M5', C: RetasSistema },
   grafos: { nome: 'Editor de grafos', resumo: 'Desenhe vértices e arestas; veja graus, matrizes e listas ao vivo e rode BFS, DFS, Dijkstra, Bellman-Ford e Kruskal passo a passo.', regiao: 'M6', C: EditorGrafos },
+  dominos: { nome: 'Dominós da indução', resumo: 'Caso base e passo indutivo como uma fila de dominós. Quebre um elo, esqueça de empurrar o primeiro e veja a prova parar.', regiao: 'M7', C: DominosInducao },
+  aegis: { nome: 'Aegis-Grid', resumo: 'O caso da U8 numa tela: derrube servidor e rotas e veja expressão, tabela-verdade, rede, matriz e risco mudarem juntos.', regiao: 'M7', C: AegisGrid },
   bancada: { nome: 'Bancada de circuitos',resumo: 'Arraste portas, ligue fios, veja o sinal passar. O jogo escreve a expressão do que você montou.', regiao: 'M2', C: Bancada },
 };
 
