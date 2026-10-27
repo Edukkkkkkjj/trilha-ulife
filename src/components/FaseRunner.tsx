@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import type { Ex, Phase, Step } from '../engine/types';
 import { GERADORES } from '../engine/geradores';
 import { newSeed, rng } from '../lib/rng';
+import { quebrarTexto } from '../lib/texto';
 import { loja, useEstado } from '../lib/store';
 import { estrelas, medalhasMerecidas, MEDALHAS } from '../lib/progresso';
 import { Exercicio } from './Exercicio';
@@ -19,6 +20,10 @@ function expandir(fase: Phase): Item[] {
     if (st.t === 'gen') {
       for (let i = 0; i < st.n; i++) { const seed = newSeed(); out.push({ k: 'ex', ex: GERADORES[st.gen](rng(seed), i), gen: { gen: st.gen, seed, nivel: i } }); }
     } else if (st.t === 'ex') out.push({ k: 'ex', ex: st.ex });
+    else if (st.t === 'texto') {
+      // telas curtas: texto comprido vira duas ou mais telas (o selo fica na primeira)
+      quebrarTexto(st.md).forEach((md, j) => out.push({ k: 'step', step: { t: 'texto', md, selo: j === 0 ? st.selo : undefined, seloNota: j === 0 ? st.seloNota : undefined } }));
+    }
     else out.push({ k: 'step', step: st });
   }
   return out;

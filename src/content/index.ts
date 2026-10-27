@@ -14,10 +14,11 @@ import { C4 } from './exp/c4';
 import { C3 } from './exp/c3';
 import { C2 } from './exp/c2';
 import { C1 } from './exp/c1';
+import { comCai } from './cai';
 
 const emObras = (id: string, mundo: 'mat' | 'exp', nome: string, unidades: string, tese: string, cards: Card[] = []): Regiao => ({ id, mundo, nome, unidades, tese, pronto: false, fases: [], cards });
 
-export const REGIOES: Regiao[] = [
+export const REGIOES: Regiao[] = ([
   M1,
   M2,
   M3,
@@ -31,7 +32,7 @@ export const REGIOES: Regiao[] = [
   C3,
   C4,
   SIMULADOS_EXP,
-];
+] as Regiao[]).map(comCai);
 
 export const MUNDOS = [
   { id: 'mat' as const, nome: 'Matemática Computacional Aplicada', curto: 'Matemática' },
