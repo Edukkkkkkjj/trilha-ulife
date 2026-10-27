@@ -141,6 +141,7 @@ export function RegiaoPage({ id }: { id: string }) {
           <p className="sub">As fases desta região entram nas próximas entregas. {r.cards.length > 0 && `Os ${r.cards.length} cartões dela já aparecem na revisão do dia.`}</p>
         </div>
       )}
+      {r.fases.some((f) => f.unidade) && <p className="mini">Esta região mistura unidades. Na A1 (só U1 a U4) caem apenas as fases marcadas <b>U1</b>; as de U7 e U8 ficam para a A2 e a A3.</p>}
       {r.pronto && (
         <div className="trilha">
           {r.fases.map((f, k) => {
