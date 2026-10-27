@@ -70,3 +70,26 @@ describe('telas montam sem erro', () => {
     expect(html).not.toContain('katex-error');
   });
 });
+
+describe('simulados no formato da prova', () => {
+  it('abrem com aviso de início e cronômetro opcional; depois do início mostram a questão', () => {
+    for (const id of ['ms-a1', 'ms-a2a', 'ms-a2b', 'cs-a1', 'cs-a2a', 'cs-a2b']) {
+      const f = todasFases().find((x) => x.id === id)!;
+      expect(f.prova, id).toBeTruthy();
+      loja.guardarAndamento(id, 0);
+      const intro = renderToString(<FaseRunner fase={f} onSair={() => {}} />);
+      expect(intro, id).toContain('só clique em');
+      expect(intro, id).toContain('Iniciar');
+      expect(intro, id).toContain(f.prova!.horas + ' h');
+      loja.guardarAndamento(id, 1);
+      expect(renderToString(<FaseRunner fase={f} onSair={() => {}} />), id).not.toContain('só clique em');
+    }
+  });
+  it('as aulas terminam mostrando o cartão "Como isso cai"', () => {
+    const f = todasFases().find((x) => x.id === 'm1-oque')!;
+    loja.guardarAndamento(f.id, 400); // o runner limita ao último passo
+    const html = renderToString(<FaseRunner fase={f} onSair={() => {}} />);
+    expect(html).toContain('Como isso cai');
+    expect(html).toContain('A3 · caso integrador');
+  });
+});

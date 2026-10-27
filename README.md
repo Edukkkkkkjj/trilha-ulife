@@ -15,12 +15,14 @@ Funciona no celular e no computador, e continua funcionando sem internet depois 
 | M5 | Álgebra linear (U6), com o caso Telecom | pronta |
 | M6 | Grafos (U7) | pronta |
 | M7 | Integração: indução, recorrência e Aegis-Grid (U8) | pronta |
-| Simulados | A1 dissertativa e A2 objetiva (duas versões) de Matemática | prontos |
+| Simulados | A1 dissertativa (só U1 a U4) e A2 objetiva (12 questões, duas versões) de Matemática | prontos |
 | C1 | Exploração · U3 Infraestrutura | pronta |
 | C2 | Exploração · U4 + U2 Sistemas e transformação digital | pronta |
 | C3 | Exploração · U5 + U6 IA, automação, no-code | pronta |
 | C4 | Exploração · U1 + U7 + U8 Cotidiano, inovação, ética e LGPD (com o roteiro da A3) | pronta |
-| Simulados | A1 dissertativa e A2 objetiva (duas versões) de Exploração | prontos |
+| Simulados | A1 dissertativa (só U1 a U4) e A2 objetiva (12 questões, duas versões) de Exploração | prontos |
+
+**Nada fica bloqueado**: todas as regiões estão abertas. A tela inicial só muda o que sugere primeiro, conforme a prova mais próxima (até 11/11, o que cai na A1; depois, tudo). Cada aula termina com o cartão "Como isso cai" (A1, A2 e A3), e os simulados imitam a prova real (nota da A2 = acertos × 2,5; cronômetro opcional de 4 h na A1 e 3 h na A2). Em Mais → Regras da prova ficam as datas e regras do regulamento.
 
 Cada região pronta tem aulas que ensinam do zero, laboratório, resumo, questões reais da plataforma (com a fonte) e um chefão.
 
@@ -109,6 +111,7 @@ Observação: o repositório público deixa o código do jogo visível para qual
 
 - Fica salvo no navegador do aparelho (não em servidor).
 - **Faça backup**: Mais → Ajustes → Exportar progresso. Isso baixa um arquivo `.json`. O painel inicial avisa há quantos dias foi o último backup.
+- Quando sai uma versão nova, o site mostra "Nova versão disponível" e basta tocar para atualizar; o progresso continua guardado.
 - Limpar os dados do navegador apaga o progresso. O arquivo de backup traz de volta.
 
 ## Para quem for mexer no código
@@ -123,6 +126,7 @@ npm run verificar # só o teste que confere os erros apontados no material do cu
 Onde fica cada coisa:
 
 - `src/content/mat/` e `src/content/exp/`: as aulas, questões e cartões de cada região.
+- `src/content/cai.ts` e `src/content/igreja.ts`: o cartão "Como isso cai" de cada aula e os exemplos da igreja que vêm antes das explicações de empresa.
 - `src/content/erros.ts`: a lista de erros encontrados no material do curso.
 - `src/engine/`: correção de exercícios e geradores de exercícios com números novos.
 - `src/components/toys/`: as ilustrações vivas. Todas usam a base `src/components/Sandbox.tsx` (desfazer, resetar, modo livre e desafio, "prever antes", arrasto com dedo e mouse).
