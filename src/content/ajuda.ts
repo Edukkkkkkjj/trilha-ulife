@@ -38,6 +38,9 @@ export function ficha(f: { titulo: string; porque: string; ideia: string; regra:
   return { t: 'licao', ...f };
 }
 
+/** Cartão "Como isso cai": o que escrever na A1, a pegadinha da A2 e como entra no caso da A3. */
+export const cai = (a1: string, a2: string, a3: string): Step => ({ t: 'cai', a1, a2, a3 });
+
 export const ex = (e: Ex): Step => ({ t: 'ex', ex: e });
 export const gen = (g: string, n = 1): Step => ({ t: 'gen', gen: g, n });
 export const texto = (md: string, selo?: Selo, seloNota?: string): Step => ({ t: 'texto', md, selo, seloNota });

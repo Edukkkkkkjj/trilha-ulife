@@ -2,10 +2,10 @@ import { useRef, useState } from 'react';
 import { ERROS_MATERIAL } from '../content/erros';
 import { fase as acharFase } from '../content';
 import { Anotar } from '../components/FaseRunner';
-import { SeloTag, Txt } from '../components/Rico';
+import { Rico, SeloTag, Txt } from '../components/Rico';
 import { TOYS, Toy } from '../components/toys';
 import { SELOS, type Mundo, type Selo, type ToyId } from '../engine/types';
-import { dataBR, diasEntre, hoje } from '../lib/datas';
+import { dataBR, diasEntre, hoje, REGRAS_PROVA } from '../lib/datas';
 import { loja, useEstado, VERSAO, type Nota } from '../lib/store';
 import { link } from '../rota';
 
@@ -229,6 +229,22 @@ export function Ajustes() {
   );
 }
 
+// ---------- regras da prova ----------
+export function Regras() {
+  return (
+    <div className="pilha g">
+      <a href={link('mais')} className="mini">← Mais</a>
+      <div><h1>Regras da prova</h1><p className="sub">Resumo do regulamento 2026.2, em linguagem simples. Na dúvida, vale o que está na plataforma.</p></div>
+      {REGRAS_PROVA.map((r) => (
+        <div className="cartao" key={r.prova}>
+          <span className="rotulo acc">{r.prova}</span>
+          <Rico>{r.linhas.map((l) => '- ' + l).join('\n')}</Rico>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Mais() {
   const pend = useEstado((x) => x.erros).filter((e) => !e.resolvido).length;
   const itens: [string, string, string][] = [
@@ -236,6 +252,7 @@ export function Mais() {
     ['diario', 'Diário de pesquisa', 'Dúvidas, erros e estalos'],
     ['a3', 'Rascunho da A3', 'Organiza suas anotações nos itens pedidos'],
     ['material', 'Erros no material do curso', `${ERROS_MATERIAL.length} itens conferidos`],
+    ['regras', 'Regras da prova', 'Datas, tempo, nota e segunda oportunidade da A1, A2, A3 e AI'],
     ['sessao', 'Sessão do dia', 'Revisão + fase nova + desafio misto'],
     ['ajustes', 'Ajustes e backup', 'Exportar, importar, tema'],
   ];

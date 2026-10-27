@@ -42,11 +42,21 @@ export type Step =
   | { t: 'ex'; ex: Ex }
   | { t: 'gen'; gen: string; n: number }
   | { t: 'feynman'; prompt: string }
-  | { t: 'escrita'; prompt: string; modelo: string; rubrica: string[]; fonte?: string };
+  | { t: 'escrita'; prompt: string; modelo: string; rubrica: string[]; fonte?: string }
+  /** Cartão "Como isso cai", no fim da aula: uma linha para cada prova. */
+  | { t: 'cai'; a1: string; a2: string; a3: string };
 
 export type TipoFase = 'leitura' | 'licao' | 'lab' | 'desafio' | 'questoes' | 'chefe';
 
-export type Phase = { id: string; titulo: string; tipo: TipoFase; min: number; resumo: string; steps: Step[] };
+/** Simulado que imita uma prova real: A1 (dissertativa, 4 h) ou A2 (objetiva, 12 questões, 3 h). */
+export type ProvaSim = { id: 'A1' | 'A2'; horas: number };
+
+export type Phase = {
+  id: string; titulo: string; tipo: TipoFase; min: number; resumo: string; steps: Step[];
+  /** Unidade do curso, só quando a região mistura unidades (a C4 mistura U1, U7 e U8). Serve ao foco da A1. */
+  unidade?: string;
+  prova?: ProvaSim;
+};
 
 export type Card = { id: string; mundo: Mundo; regiao: string; frente: string; verso: string };
 

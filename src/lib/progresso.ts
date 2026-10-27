@@ -2,7 +2,7 @@
 import { REGIOES, todosCards, todasFases, regiaoDoTopico } from '../content';
 import type { Card, Phase, Regiao } from '../engine/types';
 import type { Estado } from './store';
-import { diasEntre, hoje, PROVAS } from './datas';
+import { diasEntre, FOCO_AGORA, focoDoDia, hoje, type Foco } from './datas';
 import { revisaoDoDia } from './leitner';
 
 export function progressoRegiao(r: Regiao, s: Estado) {
@@ -11,21 +11,40 @@ export function progressoRegiao(r: Regiao, s: Estado) {
   return { feitas: feitas.length, total: r.fases.length, media, completa: r.fases.length > 0 && feitas.length === r.fases.length };
 }
 
-/** Região aberta: a primeira do mundo, as que você liberou, ou quando a anterior tem o chefão vencido. */
-export function regiaoAberta(r: Regiao, s: Estado): boolean {
-  if (!r.pronto) return false;
-  const doMundo = REGIOES.filter((x) => x.mundo === r.mundo);
-  const i = doMundo.indexOf(r);
-  if (i === 0 || s.liberadas.includes(r.id)) return true;
-  const ant = doMundo[i - 1];
-  const chefe = ant.fases.find((f) => f.tipo === 'chefe');
-  return chefe ? !!s.fases[chefe.id]?.feita : progressoRegiao(ant, s).completa;
-}
+/** Toda região pronta está aberta: a ordem é uma sugestão (ver `recomendada`), nunca um bloqueio. */
+export const regiaoAberta = (r: Regiao): boolean => r.pronto;
 
-export function proximaFase(s: Estado): (Phase & { regiao: Regiao }) | undefined {
+/** Regiões inteiras que caem na A1 (U1 a U4 de cada disciplina). Na C4, só as fases marcadas com a unidade U1. */
+const REGIOES_A1 = ['m1', 'm2', 'm3', 'c1', 'c2'];
+export function fasesDoFoco(foco: Foco): (Phase & { regiao: Regiao })[] {
+  const prontas = todasFases().filter((f) => f.regiao.pronto);
+  if (foco !== 'A1') return prontas;
+  return prontas.filter((f) => REGIOES_A1.includes(f.regiao.id) || f.unidade === 'U1' || f.prova?.id === 'A1');
+}
+export const noFoco = (f: Phase & { regiao: Regiao }, foco: Foco) => fasesDoFoco(foco).some((x) => x.id === f.id);
+
+/** Próxima fase a fazer: a que está em andamento ou, no foco de hoje, a primeira que falta do mundo mais atrasado. */
+export function proximaFase(s: Estado, dia = hoje()): (Phase & { regiao: Regiao }) | undefined {
   const emAndamento = Object.keys(s.andamento)[0];
   const todas = todasFases();
-  return todas.find((f) => f.id === emAndamento) ?? todas.find((f) => f.regiao.pronto && regiaoAberta(f.regiao, s) && !s.fases[f.id]?.feita);
+  const andando = todas.find((f) => f.id === emAndamento);
+  if (andando) return andando;
+  const foco = fasesDoFoco(focoDoDia(dia));
+  const faltam = (lista: typeof foco) => lista.filter((f) => !s.fases[f.id]?.feita);
+  const porMundo = (['mat', 'exp'] as const).map((m) => foco.filter((f) => f.regiao.mundo === m)).filter((l) => faltam(l).length);
+  if (porMundo.length) {
+    const atrasado = porMundo.sort((a, b) => faltam(b).length / b.length - faltam(a).length / a.length)[0];
+    return faltam(atrasado)[0];
+  }
+  return todas.find((f) => f.regiao.pronto && !s.fases[f.id]?.feita);
+}
+
+/** Região sugerida agora: a primeira de cada mundo que ainda tem fase do foco por fazer. */
+export function recomendada(r: Regiao, s: Estado, dia = hoje()): boolean {
+  const foco = fasesDoFoco(focoDoDia(dia));
+  const falta = (x: Regiao) => foco.some((f) => f.regiao.id === x.id && !s.fases[f.id]?.feita);
+  const primeira = REGIOES.filter((x) => x.mundo === r.mundo && x.pronto).find(falta);
+  return primeira?.id === r.id;
 }
 
 export const estrelas = (nota: number) => (nota >= 0.9 ? 3 : nota >= 0.7 ? 2 : 1);
@@ -78,14 +97,14 @@ export const MEDALHAS: Record<string, { nome: string; como: string }> = {
   ])),
 };
 
-/** Sugestão de ritmo até a A1: quantas fases por dia de estudo. */
+/** Ritmo sugerido para o foco de hoje: quantas fases e minutos faltam e a média por dia até a meta (folga antes do fim da prova). */
 export function plano(s: Estado, dia = hoje()) {
-  const prontas = todasFases().filter((f) => f.regiao.pronto);
-  const faltam = prontas.filter((f) => !s.fases[f.id]?.feita);
-  const a1 = PROVAS.find((p) => p.id === 'A1')!;
-  const dias = Math.max(1, diasEntre(dia, a1.abre));
+  const foco = focoDoDia(dia);
+  const lista = fasesDoFoco(foco);
+  const faltam = lista.filter((f) => !s.fases[f.id]?.feita);
+  const dias = Math.max(1, diasEntre(dia, FOCO_AGORA[foco].meta) + 1);
   const minutos = faltam.reduce((a, f) => a + f.min, 0);
-  return { faltam: faltam.length, total: prontas.length, dias, minutos, porDia: Math.ceil((minutos / dias) * 10) / 10 };
+  return { foco, faltam: faltam.length, total: lista.length, dias, minutos, porDia: Math.ceil((minutos / dias) * 10) / 10, meta: FOCO_AGORA[foco].meta, ate: FOCO_AGORA[foco].ate };
 }
 
 export const topicosDaRegiao = (s: Estado, regiaoId: string) => Object.keys(s.topicos).filter((t) => regiaoDoTopico(t) === regiaoId);

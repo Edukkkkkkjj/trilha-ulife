@@ -1,10 +1,11 @@
 import { MUNDOS, REGIOES, fase as acharFase, nomeTopico, regiao as acharRegiao } from '../content';
 import { FaseRunner } from '../components/FaseRunner';
 import { diasEntre, dataBR, hoje, situacoes } from '../lib/datas';
-import { MEDALHAS, cardsDisponiveis, dominio, estrelas, plano, progressoRegiao, proximaFase, regiaoAberta, revisaoDeHoje, topicoMaisFraco, topicosDaRegiao } from '../lib/progresso';
-import { loja, useEstado } from '../lib/store';
+import { MEDALHAS, cardsDisponiveis, dominio, estrelas, plano, progressoRegiao, proximaFase, recomendada, revisaoDeHoje, topicoMaisFraco, topicosDaRegiao } from '../lib/progresso';
+import { useEstado } from '../lib/store';
 import { ir, link } from '../rota';
 
+const FOCO = { A1: 'só o que cai na A1: U1 a U4', A2: 'tudo, para a A2', A3: 'tudo, para a A3' } as const;
 const TIPO: Record<string, string> = { leitura: 'Leitura', licao: 'Lição', lab: 'Laboratório', desafio: 'Desafio', questoes: 'Questões reais', chefe: 'Chefão' };
 
 export function Painel({ diasFora }: { diasFora: number }) {
@@ -16,7 +17,6 @@ export function Painel({ diasFora }: { diasFora: number }) {
   const pl = plano(s);
   const diasBackup = s.ultimoBackup ? diasEntre(s.ultimoBackup, hoje()) : null;
   const temProgresso = Object.keys(s.fases).length > 0 || s.diario.length > 0;
-  const emObras = REGIOES.filter((r) => !r.pronto).length;
 
   return (
     <div className="pilha g">
@@ -51,10 +51,11 @@ export function Painel({ diasFora }: { diasFora: number }) {
           ))}
         </div>
         <p className="sub">
-          Nas regiões já prontas faltam <b>{pl.faltam}</b> de {pl.total} fases (cerca de {pl.minutos} min). Até a A1 abrir são {pl.dias} dias: dá <b>{pl.porDia} min por dia</b> só de fases novas.
-          {emObras > 0 && ` Outras ${emObras} regiões ainda estão em construção e vão entrar nessa conta.`}
+          <b>Foco agora: {pl.foco}</b> ({FOCO[pl.foco]}). {pl.faltam === 0
+            ? `Você já fez as ${pl.total} fases deste foco.`
+            : <>Faltam <b>{pl.faltam}</b> de {pl.total} fases (cerca de {pl.minutos} min). Até {dataBR(pl.meta).slice(0, 5)}, {pl.dias === 1 ? 'hoje' : `${pl.dias} dias`}: dá <b>{pl.porDia} min por dia</b>, para chegar com folga.</>}
         </p>
-        <p className="mini">Aprovação com 70. A A3 vale 40 e não tem recuperação.</p>
+        <p className="mini">{pl.foco === 'A1' ? 'A partir de 12/11 o foco passa sozinho para a A2 (tudo).' : 'Nada está bloqueado: o foco só muda o que é sugerido primeiro.'} Aprovação com 70. A A3 vale 40 e não tem segunda oportunidade. <a href={link('regras')}>Regras da prova</a></p>
       </div>
 
       <div className="grade2">
@@ -98,15 +99,15 @@ export function Mapa() {
           <h2>{m.nome}</h2>
           <div className="trilha">
             {REGIOES.filter((r) => r.mundo === m.id).map((r) => {
-              const p = progressoRegiao(r, s), aberta = regiaoAberta(r, s);
+              const p = progressoRegiao(r, s), sugerida = r.pronto && !p.completa && recomendada(r, s);
               return (
-                <a key={r.id} className={'no' + (p.completa ? ' feita' : aberta ? ' atual' : ' fechada')} href={link('regiao/' + r.id)}>
+                <a key={r.id} className={'no' + (p.completa ? ' feita' : r.pronto ? ' atual' : ' fechada')} href={link('regiao/' + r.id)}>
                   <div className="eixo"><div className="bola">{p.completa ? '✓' : r.id.toUpperCase()}</div><div className="fio" /></div>
                   <div className="corpo">
                     <div className="entre"><h3>{r.nome}</h3><span className="pilula">{r.unidades}</span></div>
                     <p className="sub">{r.tese}</p>
                     {r.pronto ? (
-                      <div className="linha" style={{ marginTop: 6 }}><div className="barra ok" style={{ flex: 1, minWidth: 100 }}><i style={{ width: `${(p.feitas / Math.max(1, p.total)) * 100}%` }} /></div><span className="mini">{p.feitas}/{p.total} fases</span>{!aberta && <span className="pilula">fechada</span>}</div>
+                      <div className="linha" style={{ marginTop: 6 }}><div className="barra ok" style={{ flex: 1, minWidth: 100 }}><i style={{ width: `${(p.feitas / Math.max(1, p.total)) * 100}%` }} /></div><span className="mini">{p.feitas}/{p.total} fases</span>{sugerida && <span className="pilula acc">recomendado agora</span>}</div>
                     ) : <span className="pilula">em construção{r.cards.length ? ` · ${r.cards.length} cartões já na revisão` : ''}</span>}
                   </div>
                 </a>
@@ -123,7 +124,7 @@ export function RegiaoPage({ id }: { id: string }) {
   const s = useEstado((x) => x);
   const r = acharRegiao(id);
   if (!r) return <p>Região não encontrada. <a href={link('mapa')}>Voltar ao mapa</a></p>;
-  const aberta = regiaoAberta(r, s), p = progressoRegiao(r, s);
+  const p = progressoRegiao(r, s);
   const primeiraAberta = r.fases.find((f) => !s.fases[f.id]?.feita);
   const tops = topicosDaRegiao(s, r.id);
   return (
@@ -140,22 +141,15 @@ export function RegiaoPage({ id }: { id: string }) {
           <p className="sub">As fases desta região entram nas próximas entregas. {r.cards.length > 0 && `Os ${r.cards.length} cartões dela já aparecem na revisão do dia.`}</p>
         </div>
       )}
-      {r.pronto && !aberta && (
-        <div className="cartao">
-          <b>Esta região abre quando você vencer o chefão da anterior.</b>
-          <p className="sub">A ordem ajuda (uma região usa a outra), mas quem manda é você.</p>
-          <button className="btn sm" onClick={() => loja.liberar(r.id)}>Abrir mesmo assim</button>
-        </div>
-      )}
       {r.pronto && (
         <div className="trilha">
           {r.fases.map((f, k) => {
-            const st = s.fases[f.id], atual = aberta && f.id === primeiraAberta?.id;
+            const st = s.fases[f.id], atual = f.id === primeiraAberta?.id;
             return (
-              <a key={f.id} className={'no' + (st?.feita ? ' feita' : atual ? ' atual' : '') + (f.tipo === 'chefe' ? ' chefe' : '') + (aberta ? '' : ' fechada')} href={aberta ? link('fase/' + f.id) : undefined} aria-disabled={!aberta}>
+              <a key={f.id} className={'no' + (st?.feita ? ' feita' : atual ? ' atual' : '') + (f.tipo === 'chefe' ? ' chefe' : '')} href={link('fase/' + f.id)}>
                 <div className="eixo"><div className="bola">{st?.feita ? '✓' : f.tipo === 'chefe' ? '♛' : k + 1}</div><div className="fio" /></div>
                 <div className="corpo">
-                  <div className="entre"><h3>{f.titulo}</h3>{st?.feita && <span className="estrelas">{'★'.repeat(estrelas(st.melhor))}</span>}</div>
+                  <div className="entre"><h3>{f.titulo}{f.unidade && <> <span className="pilula">{f.unidade}</span></>}</h3>{st?.feita && <span className="estrelas">{'★'.repeat(estrelas(st.melhor))}</span>}</div>
                   <p className="sub">{f.resumo}</p>
                   <span className="mini">{TIPO[f.tipo]} · {f.min} min{s.andamento[f.id] !== undefined ? ' · em andamento' : ''}</span>
                 </div>

@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
+import { atualizarAgora, useNovaVersao } from './lib/atualizacao';
 import { diasEntre, hoje } from './lib/datas';
 import { nivel, xpDoNivel } from './lib/progresso';
 import { loja, useEstado } from './lib/store';
-import { Ajustes, Brincar, Diario, ErrosMaterial, Mais, RascunhoA3 } from './pages/Caderno';
+import { Ajustes, Brincar, Diario, ErrosMaterial, Mais, RascunhoA3, Regras } from './pages/Caderno';
 import { Erros, Revisao, Sessao } from './pages/Estudo';
 import { FasePage, Mapa, Painel, RegiaoPage } from './pages/Painel';
 import { link, useRota } from './rota';
@@ -35,6 +36,7 @@ export function App() {
   const aba = !a ? 'inicio' : a === 'mapa' || a === 'regiao' ? 'mapa' : a === 'revisao' ? 'revisao' : a === 'brincar' ? 'brincar' : 'mais';
   const n = nivel(xp), base = xpDoNivel(n), prox = xpDoNivel(n + 1);
   const aviso = loja.aviso();
+  const novaVersao = useNovaVersao();
 
   let tela: React.JSX.Element;
   if (!a) tela = <Painel diasFora={DIAS_FORA} />;
@@ -49,6 +51,7 @@ export function App() {
   else if (a === 'brincar') tela = <Brincar id={b} />;
   else if (a === 'material') tela = <ErrosMaterial />;
   else if (a === 'ajustes') tela = <Ajustes />;
+  else if (a === 'regras') tela = <Regras />;
   else if (a === 'mais') tela = <Mais />;
   else tela = <p>Tela não encontrada. <a href={link('')}>Ir para o início</a></p>;
 
@@ -65,6 +68,12 @@ export function App() {
             <div className="barra" style={{ width: 64 }} aria-label={`${xp - base} de ${prox - base} XP para o próximo nível`}><i style={{ width: `${((xp - base) / (prox - base)) * 100}%` }} /></div>
           </div>
         </header>
+      )}
+      {novaVersao && (
+        <div className="aviso" role="status" style={{ marginBottom: 12 }}>
+          <b>Nova versão disponível.</b> Seu progresso fica guardado.{' '}
+          <button className="btn pri sm" onClick={atualizarAgora}>Tocar para atualizar</button>
+        </div>
       )}
       {aviso && <div className="aviso" role="alert" style={{ marginBottom: 12 }}>{aviso}</div>}
       <main>{tela}</main>

@@ -170,7 +170,8 @@ describe('simulados de Exploração', () => {
     const originais = todasFases().filter((f) => !f.regiao.simulado).flatMap((f) => f.steps.flatMap((s) => (s.t === 'ex' ? [s.ex] : [])));
     for (const letra of ['a', 'b'] as const) {
       const exs = fase('cs-a2' + letra).steps.flatMap((s) => (s.t === 'ex' ? [s.ex] : []));
-      expect(exs).toHaveLength(16);
+      expect(exs).toHaveLength(12);
+      expect(fase('cs-a2' + letra).prova).toEqual({ id: 'A2', horas: 3 });
       IDS_A2_EXP[letra].forEach((id, i) => {
         const o = originais.find((x) => x.id === id)!;
         expect(o.fonte, id).toMatch(/^U\d/);
@@ -182,7 +183,9 @@ describe('simulados de Exploração', () => {
     }
     expect(IDS_A2_EXP.a.filter((id) => IDS_A2_EXP.b.includes(id))).toEqual([]);
   });
-  it('A1: quatro dissertativas com modelo e rubrica de 6 itens', () => {
+  it('A1: quatro dissertativas só de U1 a U4, com modelo e rubrica de 6 itens', () => {
+    expect(fase('cs-a1').prova).toEqual({ id: 'A1', horas: 4 });
+    expect(JSON.stringify(fase('cs-a1').steps)).not.toMatch(/LGPD|viés|supervisionado|Startup|ecossistema/i);
     const esc = fase('cs-a1').steps.filter((s) => s.t === 'escrita');
     expect(esc).toHaveLength(4);
     for (const s of esc) if (s.t === 'escrita') { expect(s.modelo.length).toBeGreaterThan(300); expect(s.rubrica).toHaveLength(6); }
